@@ -3,7 +3,6 @@ package com.example.f1.service;
 import com.example.f1.entity.User;
 import com.example.f1.repository.UserRepository;
 import com.example.f1.util.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,14 +14,15 @@ import java.util.Optional;
 @Service
 public class UserService implements UserDetailsService {
     
-    @Autowired
-    private UserRepository userRepository;
-    
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    
-    @Autowired
-    private JwtUtil jwtUtil;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
+    }
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
