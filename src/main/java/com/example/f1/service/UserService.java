@@ -48,15 +48,16 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
     
-    public String loginUser(String username, String password) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    public String loginUser(String usernameOrEmail, String password) {
+        User user = userRepository.findByUsername(usernameOrEmail)
+            .orElseGet(() -> userRepository.findByEmail(usernameOrEmail)
+                .orElseThrow(() -> new RuntimeException("User not found")));
         
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new RuntimeException("Invalid password");
         }
         
-        return jwtUtil.generateToken(username);
+        return jwtUtil.generateToken(usernameOrEmail);
     }
     
     public Optional<User> findByUsername(String username) {
