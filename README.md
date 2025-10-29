@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # F1 Korea Backend
 
 F1 Korea 커뮤니티 사이트의 Spring Boot 백엔드 API 서버입니다.
@@ -134,3 +135,7 @@ spring.datasource.password=your_password
 
 프로젝트 관련 문의사항이 있으시면 이슈를 등록해 주세요.
 
+=======
+# f1
+f1
+>>>>>>> 12a60e3c02efb85320d2bc1cb3134041f296c310
