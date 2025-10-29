@@ -31,7 +31,7 @@ public class Post {
     
     @Enumerated(EnumType.STRING)
     @Column(name = "post_type")
-    private PostType postType = PostType.NORMAL;
+    private PostType postType = PostType.GENERAL;
     
     @Column(name = "ends_at")
     private LocalDateTime endsAt;
