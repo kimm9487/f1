@@ -57,7 +57,7 @@ public class UserService implements UserDetailsService {
             throw new RuntimeException("Invalid password");
         }
         
-        return jwtUtil.generateToken(usernameOrEmail);
+        return jwtUtil.generateToken(user.getUsername());
     }
     
     public Optional<User> findByUsername(String username) {
