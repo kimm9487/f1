@@ -118,7 +118,7 @@ spring.datasource.password=your_password
 
 ## 🔧 개발 환경
 
-- **IDE**: IntelliJ IDEA 또는 Eclipse
+- **IDE**: Eclipse
 - **JDK**: 17 이상
 - **MySQL**: 8.0 이상
 - **Gradle**: 7.0 이상
