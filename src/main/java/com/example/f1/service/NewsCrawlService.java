@@ -33,3 +33,14 @@ public class NewsCrawlService {
         }
     }
 }
+
+// 저장된 뉴스 목록 조회 (최신순)
+    public List<NewsDTO> getLatestNews() {
+        List<NewsEntity> newsList = newsRepository.findAllByOrderByPublishedDateDesc();
+        List<NewsDTO> dtoList = new ArrayList<>();
+        for (NewsEntity news : newsList) {
+            dtoList.add(new NewsDTO(news));
+        }
+        return dtoList;
+    }
+}
