@@ -32,6 +32,14 @@ F1 Korea 커뮤니티 사이트의 Spring Boot 백엔드 API 서버입니다.
   - `GET /api/f1/weather/latest`: 가장 최근 저장된 날씨 상태
   - `POST /api/f1/weather/refresh`: 즉시 OpenF1 API를 호출해 최신 날씨를 DB에 적재
   - 매 5분마다 `@Scheduled` 작업이 `openf1.weather.default-meeting-key` 세션을 기준으로 OpenF1 날씨 데이터를 다시 가져옵니다
+  - `GET /api/f1/car-data`: driver/meeting key와 limit을 받아 저장된 카 데이터 시계열을 제공
+  - `GET /api/f1/car-data/latest`: 해당 설정의 최신 카 데이터를 반환
+  - `POST /api/f1/car-data/refresh`: OpenF1의 car_data 엔드포인트를 호출하여 DB에 저장
+  - 매 1분마다 `@Scheduled` 작업이 설정된 driver/meeting 키로 Car Data를 갱신합니다
+  - `GET /api/f1/drivers`: meeting/driver key와 limit으로 저장된 드라이버 정보를 반환
+  - `GET /api/f1/drivers/latest`: 해당 설정의 최신 드라이버 정보를 반환
+  - `POST /api/f1/drivers/refresh`: OpenF1의 drivers 엔드포인트를 호출하여 DB를 갱신
+  - 매 5분마다 `@Scheduled` 작업으로 설정된 meeting/driver 키를 기준으로 드라이버 정보를 갱신합니다
 
 ## 🛠️ 기술 스택
 
