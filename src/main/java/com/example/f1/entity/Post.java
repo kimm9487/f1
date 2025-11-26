@@ -44,6 +44,9 @@ public class Post {
     
     @Column(name = "comment_count")
     private Integer commentCount = 0;
+
+    @Column(name = "category", length = 50)
+    private String category;
     
     @Column(name = "tags", columnDefinition = "TEXT")
     private String tags;
@@ -171,7 +174,15 @@ public class Post {
     public void setCommentCount(Integer commentCount) {
         this.commentCount = commentCount;
     }
-    
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public String getTags() {
         return tags;
     }
