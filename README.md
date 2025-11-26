@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # F1 Korea Backend
 
 F1 Korea 커뮤니티 사이트의 Spring Boot 백엔드 API 서버입니다.
@@ -28,6 +27,11 @@ F1 Korea 커뮤니티 사이트의 Spring Boot 백엔드 API 서버입니다.
 - 드라이버 정보 관리
 - 팀 정보 관리
 - 레이스 정보 관리
+- **OpenF1 API 연동**
+  - `GET /api/f1/weather`: meeting key와 limit을 받아 저장된 날씨 기록을 반환
+  - `GET /api/f1/weather/latest`: 가장 최근 저장된 날씨 상태
+  - `POST /api/f1/weather/refresh`: 즉시 OpenF1 API를 호출해 최신 날씨를 DB에 적재
+  - 매 5분마다 `@Scheduled` 작업이 `openf1.weather.default-meeting-key` 세션을 기준으로 OpenF1 날씨 데이터를 다시 가져옵니다
 
 ## 🛠️ 기술 스택
 
@@ -131,4 +135,3 @@ spring.datasource.password=your_password
 
 - Backend Developer: [김규호]
 
-=======
