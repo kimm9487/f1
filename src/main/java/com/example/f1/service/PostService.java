@@ -87,7 +87,6 @@ public class PostService {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Post not found"));
         
-        // TODO: 좋아요 중복 체크 로직 추가 필요
         post.setLikeCount(post.getLikeCount() + 1);
         
         // HOT 점수 계산 (조회수 + 좋아요수 + 댓글수)
