@@ -86,6 +86,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/boards/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/posts/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/posts").permitAll()
+                .requestMatchers("/api/f1/**").permitAll()
+                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(AbstractHttpConfigurer::disable)

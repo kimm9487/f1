@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # F1 Korea Backend
 
 F1 Korea 커뮤니티 사이트의 Spring Boot 백엔드 API 서버입니다.
@@ -33,6 +32,71 @@ F1 Korea 커뮤니티 사이트의 Spring Boot 백엔드 API 서버입니다.
 - 드라이버 정보 관리
 - 팀 정보 관리
 - 레이스 정보 관리
+- **OpenF1 API 연동**
+  - `GET /api/f1/weather`: meeting key와 limit을 받아 저장된 날씨 기록을 반환
+  - `GET /api/f1/weather/latest`: 가장 최근 저장된 날씨 상태
+  - `POST /api/f1/weather/refresh`: 즉시 OpenF1 API를 호출해 최신 날씨를 DB에 적재
+  - 매 5분마다 `@Scheduled` 작업이 `openf1.weather.default-meeting-key` 세션을 기준으로 OpenF1 날씨 데이터를 다시 가져옵니다
+  - `GET /api/f1/car-data`: driver/meeting key와 limit을 받아 저장된 카 데이터 시계열을 제공
+  - `GET /api/f1/car-data/latest`: 해당 설정의 최신 카 데이터를 반환
+  - `POST /api/f1/car-data/refresh`: OpenF1의 car_data 엔드포인트를 호출하여 DB에 저장
+  - 매 1분마다 `@Scheduled` 작업이 설정된 driver/meeting 키로 Car Data를 갱신합니다
+  - `GET /api/f1/drivers`: meeting/driver key와 limit으로 저장된 드라이버 정보를 반환
+  - `GET /api/f1/drivers/latest`: 해당 설정의 최신 드라이버 정보를 반환
+  - `POST /api/f1/drivers/refresh`: OpenF1의 drivers 엔드포인트를 호출하여 DB를 갱신
+  - 매 5분마다 `@Scheduled` 작업으로 설정된 meeting/driver 키를 기준으로 드라이버 정보를 갱신합니다
+  - `GET /api/f1/intervals`: meeting/driver key와 limit을 받아 기록된 인터벌 데이터를 반환
+  - `GET /api/f1/intervals/latest`: 해당 설정의 가장 최근 인터벌 정보를 반환
+  - `POST /api/f1/intervals/refresh`: OpenF1의 intervals 엔드포인트를 호출하여 DB를 갱신
+  - 매 5분마다 `@Scheduled` 작업이 설정된 meeting/driver 키를 기준으로 intervals 데이터를 가져옵니다
+  - `GET /api/f1/laps`: meeting/driver key로 저장된 랩 데이터를 조회
+  - `GET /api/f1/laps/latest`: 가장 최근 저장된 랩 기록
+  - `POST /api/f1/laps/refresh`: OpenF1의 laps 엔드포인트를 호출하여 DB에 저장
+  - 매 5분마다 `@Scheduled` 작업이 설정된 driver/meeting 키로 Laps를 갱신합니다
+  - `GET /api/f1/location`: meeting/driver key로 저장된 위치 데이터를 조회
+  - `GET /api/f1/location/latest`: 가장 최근 저장된 위치 기록
+  - `POST /api/f1/location/refresh`: OpenF1의 location 엔드포인트를 호출하여 DB에 저장
+  - 매 2분마다 `@Scheduled` 작업이 설정된 driver/meeting 키로 Location을 갱신합니다
+  - `GET /api/f1/meetings`: year 또는 meetingKey로 저장된 미팅 정보를 조회
+  - `GET /api/f1/meetings/latest`: 가장 최근 저장된 미팅 기록
+  - `POST /api/f1/meetings/refresh`: OpenF1의 meetings 엔드포인트를 호출하여 DB에 저장
+  - 매 1시간마다 `@Scheduled` 작업이 설정된 연도를 기준으로 Meetings를 갱신합니다
+  - `GET /api/f1/overtakes`: meetingKey 또는 driverNumber로 저장된 추월 데이터를 조회
+  - `GET /api/f1/overtakes/latest`: 가장 최근 저장된 추월 기록
+  - `POST /api/f1/overtakes/refresh`: OpenF1의 overtakes 엔드포인트를 호출하여 DB에 저장
+  - 매 3분마다 `@Scheduled` 작업이 설정된 meeting/session 키로 Overtakes를 갱신합니다
+  - `GET /api/f1/pit`: meetingKey 또는 driverNumber로 저장된 피트스톱 데이터를 조회
+  - `GET /api/f1/pit/latest`: 가장 최근 저장된 피트스톱 기록
+  - `POST /api/f1/pit/refresh`: OpenF1의 pit 엔드포인트를 호출하여 DB에 저장
+  - 매 4분마다 `@Scheduled` 작업이 설정된 meeting/session 키로 Pit을 갱신합니다
+  - `GET /api/f1/position`: meetingKey 또는 driverNumber로 저장된 순위 데이터를 조회
+  - `GET /api/f1/position/latest`: 가장 최근 저장된 순위 기록
+  - `POST /api/f1/position/refresh`: OpenF1의 position 엔드포인트를 호출하여 DB에 저장
+  - 매 1.5분마다 `@Scheduled` 작업이 설정된 meeting/session 키로 Position을 갱신합니다
+  - `GET /api/f1/race-control`: meetingKey 또는 category로 저장된 레이스 컨트롤 메시지를 조회
+  - `GET /api/f1/race-control/latest`: 가장 최근 저장된 레이스 컨트롤 기록
+  - `POST /api/f1/race-control/refresh`: OpenF1의 race_control 엔드포인트를 호출하여 DB에 저장
+  - 매 2분마다 `@Scheduled` 작업이 설정된 meeting/session 키로 Race Control을 갱신합니다
+  - `GET /api/f1/sessions`: meetingKey, year 또는 sessionType으로 저장된 세션 정보를 조회
+  - `GET /api/f1/sessions/latest`: 가장 최근 저장된 세션 기록
+  - `POST /api/f1/sessions/refresh`: OpenF1의 sessions 엔드포인트를 호출하여 DB에 저장
+  - 매 30분마다 `@Scheduled` 작업이 설정된 연도를 기준으로 Sessions를 갱신합니다
+  - `GET /api/f1/session-result`: meetingKey, sessionKey 또는 driverNumber로 저장된 세션 결과를 조회
+  - `GET /api/f1/session-result/latest`: 가장 최근 저장된 세션 결과 기록
+  - `POST /api/f1/session-result/refresh`: OpenF1의 session_result 엔드포인트를 호출하여 DB에 저장
+  - 매 10분마다 `@Scheduled` 작업이 설정된 meeting/session 키로 Session Result를 갱신합니다
+  - `GET /api/f1/starting-grid`: meetingKey, sessionKey 또는 driverNumber로 저장된 스타팅 그리드를 조회
+  - `GET /api/f1/starting-grid/latest`: 가장 최근 저장된 스타팅 그리드 기록
+  - `POST /api/f1/starting-grid/refresh`: OpenF1의 starting_grid 엔드포인트를 호출하여 DB에 저장
+  - 매 30분마다 `@Scheduled` 작업이 설정된 meeting/session 키로 Starting Grid를 갱신합니다
+  - `GET /api/f1/stints`: meetingKey, sessionKey 또는 driverNumber로 저장된 스틴트를 조회
+  - `GET /api/f1/stints/latest`: 가장 최근 저장된 스틴트 기록
+  - `POST /api/f1/stints/refresh`: OpenF1의 stints 엔드포인트를 호출하여 DB에 저장
+  - 매 10분마다 `@Scheduled` 작업이 설정된 meeting/session 키로 Stints를 갱신합니다
+  - `GET /api/f1/team-radio`: meetingKey, sessionKey 또는 driverNumber로 저장된 팀 라디오를 조회
+  - `GET /api/f1/team-radio/latest`: 가장 최근 저장된 팀 라디오 기록
+  - `POST /api/f1/team-radio/refresh`: OpenF1의 team_radio 엔드포인트를 호출하여 DB에 저장
+  - 매 5분마다 `@Scheduled` 작업이 설정된 meeting/session 키로 Team Radio를 갱신합니다
 
 ## 🛠️ 기술 스택
 
@@ -123,7 +187,7 @@ spring.datasource.password=your_password
 
 ## 🔧 개발 환경
 
-- **IDE**: IntelliJ IDEA 또는 Eclipse
+- **IDE**: Eclipse
 - **JDK**: 17 이상
 - **MySQL**: 8.0 이상
 - **Gradle**: 7.0 이상
@@ -136,4 +200,3 @@ spring.datasource.password=your_password
 
 - Backend Developer: [김규호]
 
-=======
