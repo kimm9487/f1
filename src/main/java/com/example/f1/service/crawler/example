@@ -1,0 +1,69 @@
+@Component
+public class FiaNewsCrawler implements NewsCrawler {
+    private static final String URL = "https://www.fia.com/news";
+    @Override
+    public List<NewsEntity> crawl() throws Exception {
+        List<NewsEntity> result = new ArrayList<>();
+        Document doc = Jsoup.connect(URL).get();
+        // FIA 사이트의 HTML에 맞는 요소 선택 (예: 기사 리스트 아이템)
+        // Elements items = doc.select("div.view-news-listing .news-item"); 등
+        // 각 item에서 제목, 링크, 날짜, 요약 추출
+        // NewsEntity 생성하여 result에 추가
+        return result; // 실제 구현 시 추출된 리스트 반환
+    }
+}
+
+@Component
+public class GazzettaNewsCrawler implements NewsCrawler {
+    private static final String URL = "https://www.gazzetta.it/Formula-1/";
+    @Override
+    public List<NewsEntity> crawl() throws Exception {
+        List<NewsEntity> result = new ArrayList<>();
+        Document doc = Jsoup.connect(URL).get();
+        // 가제타 사이트의 F1 뉴스 섹션 파싱 (이탈리아어 페이지)
+        // 기사 카드 또는 리스트의 제목(<a>), 링크, 날짜 정보 추출
+        // 필요시 요약도 추출 (본문 일부 또는 소개 글)
+        return result;
+    }
+}
+
+@Component
+public class Formula1OfficialNewsCrawler implements NewsCrawler {
+    private static final String URL = "https://www.formula1.com/en/latest";
+    @Override
+    public List<NewsEntity> crawl() throws Exception {
+        List<NewsEntity> result = new ArrayList<>();
+        Document doc = Jsoup.connect(URL).get();
+        // Formula1 공식 사이트 최신 뉴스 파싱
+        // (공식 사이트는 동적으로 로드될 수 있어, SSR된 부분이나 RSS 활용 검토 가능)
+        // 기사 카드에서 제목, 링크 추출. 필요한 경우 각 기사 페이지 접근하여 내용/날짜 확보.
+        return result;
+    }
+}
+
+@Component
+public class TheRaceNewsCrawler implements NewsCrawler {
+    private static final String URL = "https://www.the-race.com/category/formula-1/";
+    @Override
+    public List<NewsEntity> crawl() throws Exception {
+        List<NewsEntity> result = new ArrayList<>();
+        Document doc = Jsoup.connect(URL).get();
+        // The-Race 사이트의 F1 카테고리 페이지 파싱
+        // <article> 또는 <div class="post"> 등으로 기사 블럭을 찾고, 제목, 링크, 날짜, 요약 추출
+        return result;
+    }
+}
+
+@Component
+public class AutosportNewsCrawler implements NewsCrawler {
+    private static final String URL = "https://www.autosport.com/f1/news/";
+    @Override
+    public List<NewsEntity> crawl() throws Exception {
+        List<NewsEntity> result = new ArrayList<>();
+        Document doc = Jsoup.connect(URL).get();
+        // Autosport 사이트 F1 뉴스 목록 파싱
+        // Motorsport와 유사한 구조일 수 있으므로, 기사 <a> 태그에서 제목/링크 추출
+        // 발행시간과 요약도 가능하면 추출하거나 생략
+        return result;
+    }
+}
